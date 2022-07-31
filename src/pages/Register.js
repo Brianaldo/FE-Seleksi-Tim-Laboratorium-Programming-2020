@@ -11,12 +11,12 @@ export default function Register() {
   return (
     <div className="grid h-screen place-items-center p-5">
       <form class="w-full max-w-lg">
-        <p class="text-xs text-right">
+        <p class="text-xs md:text-sm text-right">
           Already have an account? <b>Log In</b>
         </p>
         <div class="flex flex-wrap -mx-3 mb-6">
           <div class="w-full px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs md:text-sm font-bold mb-2">
               Name
             </label>
             <input
@@ -24,14 +24,14 @@ export default function Register() {
               id="name"
               type="text"
             />
-            <p class="text-gray-600 text-xs italic">
+            <p class="text-gray-600 text-xs md:text-sm italic">
               Make it as long and as crazy as you'd like
             </p>
           </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-6">
           <div class="w-full px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs md:text-sm font-bold mb-2">
               Username
             </label>
             <input
@@ -39,14 +39,14 @@ export default function Register() {
               id="username"
               type="text"
             />
-            <p class="text-gray-600 text-xs italic">
+            <p class="text-gray-600 text-xs md:text-sm italic">
               Make it as long and as crazy as you'd like
             </p>
           </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-6">
           <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs md:text-sm font-bold mb-2">
               Password
             </label>
             <input
@@ -54,13 +54,13 @@ export default function Register() {
               id="grid-first-name"
               type="password"
             />
-            <p class="text-red-500 text-xs italic">
+            <p class="text-red-500 text-xs md:text-sm italic">
               Please fill out this field.
             </p>
           </div>
           <div class="w-full md:w-1/2 px-3">
             <label
-              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              class="block uppercase tracking-wide text-gray-700 text-xs md:text-sm font-bold mb-2"
               for="grid-last-name"
             >
               Confirm Password
@@ -74,11 +74,11 @@ export default function Register() {
         </div>
         <div class="flex flex-wrap -mx-3 mb-6">
           <div class="w-full px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs md:text-sm font-bold mb-2">
               Identity Photo
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:border-tertiary-400 tracking-wide text-xs mb-2 cursor-pointer
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:border-tertiary-400 tracking-wide text-xs md:text-sm mb-2 cursor-pointer
                          file:border-none file:bg-gray-200 file:font-bold file:text-gray-700"
               id="large_size"
               type="file"

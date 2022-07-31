@@ -11,12 +11,12 @@ export default function Login() {
   return (
     <div className="grid h-screen place-items-center p-5">
       <form class="w-full max-w-lg">
-        <p class="text-xs text-right">
+        <p class="text-xs md:text-sm text-right">
           Don't have an account? <b>Sign Up</b>
         </p>
         <div class="flex flex-wrap -mx-3 mb-6">
           <div class="w-full px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs md:text-sm font-bold mb-2">
               Username
             </label>
             <input
@@ -24,14 +24,14 @@ export default function Login() {
               id="username"
               type="text"
             />
-            <p class="text-gray-600 text-xs italic">
+            <p class="text-gray-600 text-xs md:text-sm italic">
               Make it as long and as crazy as you'd like
             </p>
           </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-6">
           <div class="w-full px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs md:text-sm font-bold mb-2">
               Username
             </label>
             <input
@@ -39,7 +39,7 @@ export default function Login() {
               id="username"
               type="text"
             />
-            <p class="text-gray-600 text-xs italic">
+            <p class="text-gray-600 text-xs md:text-sm italic">
               Make it as long and as crazy as you'd like
             </p>
           </div>
