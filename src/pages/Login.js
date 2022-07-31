@@ -9,50 +9,49 @@ export default function Login() {
   };
 
   return (
-    <div className="grid h-screen place-items-center">
-      <form className="w-full max-w-sm" onSubmit={onSubmitHandler}>
-        <div className="md:flex md:items-center mb-6">
-          <div className="md:w-1/3">
-            <label className="block text-primary font-bold md:text-right mb-1 md:mb-0 pr-4">
+    <div className="grid h-screen place-items-center p-5">
+      <form class="w-full max-w-lg">
+        <p class="text-xs text-right">
+          Don't have an account? <b>Sign Up</b>
+        </p>
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="w-full px-3">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Username
             </label>
-          </div>
-          <div className="md:w-2/3">
             <input
-              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-tertiary-400"
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-tertiary-400"
               id="username"
               type="text"
-              placeholder="username"
-              ref={username}
             />
+            <p class="text-gray-600 text-xs italic">
+              Make it as long and as crazy as you'd like
+            </p>
           </div>
         </div>
-        <div className="md:flex md:items-center mb-6">
-          <div className="md:w-1/3">
-            <label className="block text-primary font-bold md:text-right mb-1 md:mb-0 pr-4">
-              Password
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="w-full px-3">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Username
             </label>
-          </div>
-          <div className="md:w-2/3">
             <input
-              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-tertiary-400"
-              id="inline-password"
-              type="password"
-              ref={password}
+              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-tertiary-400"
+              id="username"
+              type="text"
             />
+            <p class="text-gray-600 text-xs italic">
+              Make it as long and as crazy as you'd like
+            </p>
           </div>
         </div>
-        <div className="md:flex md:items-center">
-          <div className="md:w-1/3"></div>
-          <div className="md:w-2/3">
+
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="w-full px-3 flex flex-row-reverse">
             <input
               className="shadow bg-tertiary-400 hover:bg-tertiary-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="submit"
               value="Log In"
             />
-            <span className="text-center text-primary font-bold h-full place-items-center ml-8">
-              or <u>Sign Up</u>
-            </span>
           </div>
         </div>
       </form>
