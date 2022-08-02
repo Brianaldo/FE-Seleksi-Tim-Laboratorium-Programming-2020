@@ -28,12 +28,12 @@ export default function AdminProfile() {
         headers: { Authorization: authCtx.token },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setCustomer(response.data);
         setIsNotFound(false);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         setIsNotFound(true);
       })
       .finally(() => {
@@ -48,12 +48,12 @@ export default function AdminProfile() {
         headers: { Authorization: authCtx.token },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setTotal(response.data.total);
         setHistory(response.data.result);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       })
       .finally(() => {
         setIsTransactionsLoading(false);

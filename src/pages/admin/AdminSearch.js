@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { FaChevronRight, FaSearch } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 import SideBar from "../../Components/SideBar";
 import AuthContext from "../../context/auth-context";
 import { Link } from "react-router-dom";
@@ -15,7 +15,7 @@ export default function AdminSearch() {
   useEffect(() => {
     setIsLoading(true);
     const delayDebounceFn = setTimeout(() => {
-      console.log(searchTerm);
+      // console.log(searchTerm);
       axios
         .post(
           "http://localhost:3001/admin/profile",
@@ -25,11 +25,11 @@ export default function AdminSearch() {
           }
         )
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setCustomers(response.data);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         })
         .finally(() => {
           setIsLoading(false);

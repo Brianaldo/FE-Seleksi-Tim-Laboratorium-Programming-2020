@@ -1,6 +1,11 @@
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import SideBar from "../../Components/SideBar";
+import Toast, {
+  DangerToast,
+  SuccessToast,
+  WarningToast,
+} from "../../Components/Toast";
 import AuthContext from "../../context/auth-context";
 
 function sleep(ms) {
@@ -17,17 +22,25 @@ export default function Transfer() {
   const [currencies, setCurrencies] = useState([]);
   const [isGettingCurrencies, setIsGettingCurrencies] = useState(true);
   const [isRequesting, setIsRequesting] = useState(false);
+  const [toasts, setToasts] = useState([]);
 
   useEffect(() => {
     setIsGettingCurrencies(true);
     axios
       .get("http://localhost:3001/currency")
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setCurrencies(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        setToasts([
+          ...toasts,
+          <WarningToast
+            message="Fail to load currencies."
+            key={toasts.length}
+          />,
+        ]);
       })
       .finally(() => {
         setIsGettingCurrencies(false);
@@ -53,16 +66,41 @@ export default function Transfer() {
       )
       .then((response) => {
         console.log(response);
+        setToasts([
+          ...toasts,
+          <SuccessToast message="Transfer success." key={toasts.length} />,
+        ]);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error.response.status);
+        if (error.response.status === 400)
+          setToasts([
+            ...toasts,
+            <DangerToast
+              message="Fail to transfer. Check balance (?)"
+              key={toasts.length}
+            />,
+          ]);
+
+        if (error.response.status === 404)
+          setToasts([
+            ...toasts,
+            <DangerToast
+              message="Fail to transfer. Check username (?)"
+              key={toasts.length}
+            />,
+          ]);
       })
       .finally(() => {
+        currentTarget.current.value = "";
+        currentAmount.current.value = "";
+        currentCurrency.current.value = "IDR";
         setIsRequesting(false);
       });
   };
   return (
     <>
+      <Toast toasts={toasts} />
       <SideBar />
       <div className="w-screen pl-16">
         <h1 className="block uppercase tracking-wide text-primary text-base md:text-lg font-bold my-4 text-center">
@@ -80,6 +118,7 @@ export default function Transfer() {
                 placeholder="username"
                 required
                 ref={currentTarget}
+                autoComplete="off"
               />
             </div>
             <div className="mb-4 flex gap-5">
@@ -89,7 +128,7 @@ export default function Transfer() {
                 </label>
                 <select
                   id="currency"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 cursor-pointer border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   required
                   ref={currentCurrency}
                   defaultValue="IDR"

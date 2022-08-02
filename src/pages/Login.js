@@ -25,14 +25,14 @@ export default function Login() {
         password: password.current.value,
       })
       .then((response) => {
-        setCredMsg();
-        console.log(response);
+        // setCredMsg();
+        // console.log(response);
 
         authCtx.login(response.data.accessToken, response.data.role);
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         if (error.response.status === 401)
           setCredMsg("Wait for admin to verify your account.");
         else setCredMsg("Invalid username or password.");
@@ -99,7 +99,7 @@ export default function Login() {
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3 flex flex-row-reverse">
             <input
-              className="shadow bg-tertiary-400 hover:bg-tertiary-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+              className="shadow cursor-pointer bg-tertiary-400 hover:bg-tertiary-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="submit"
               value="Log In"
               disabled={isLoading}

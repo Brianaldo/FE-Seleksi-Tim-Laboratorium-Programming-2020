@@ -4,12 +4,18 @@ import SideBar from "../../Components/SideBar";
 import AuthContext from "../../context/auth-context";
 import { FaUserCheck } from "react-icons/fa";
 import { CgCheck, CgClose } from "react-icons/cg";
+import Toast, {
+  DangerToast,
+  SuccessToast,
+  WarningToast,
+} from "../../Components/Toast";
 
 export default function AdminAccount() {
   const authCtx = useContext(AuthContext);
 
   const [pendingAccounts, setPendingAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [toasts, setToasts] = useState([]);
 
   useEffect(() => {
     axios
@@ -17,11 +23,15 @@ export default function AdminAccount() {
         headers: { Authorization: authCtx.token },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setPendingAccounts(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        setToasts([
+          ...toasts,
+          <WarningToast message="Fail to fetch data." key={toasts.length} />,
+        ]);
       })
       .finally(() => {
         setIsLoading(false);
@@ -38,13 +48,25 @@ export default function AdminAccount() {
         }
       )
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         let newPendingAccounts = [...pendingAccounts];
         newPendingAccounts.splice(index, 1);
         setPendingAccounts(newPendingAccounts);
+
+        setToasts([
+          ...toasts,
+          <SuccessToast
+            message={`${username} verified.`}
+            key={toasts.length}
+          />,
+        ]);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        setToasts([
+          ...toasts,
+          <WarningToast message="Fail to verify." key={toasts.length} />,
+        ]);
       });
   };
 
@@ -58,17 +80,27 @@ export default function AdminAccount() {
         }
       )
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         let newPendingAccounts = [...pendingAccounts];
         newPendingAccounts.splice(index, 1);
         setPendingAccounts(newPendingAccounts);
+
+        setToasts([
+          ...toasts,
+          <DangerToast message={`${username} rejected.`} key={toasts.length} />,
+        ]);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        setToasts([
+          ...toasts,
+          <WarningToast message="Fail to reject." key={toasts.length} />,
+        ]);
       });
   };
   return (
     <>
+      <Toast toasts={toasts} />
       <SideBar />
       <div className="w-screen pl-16">
         {!isLoading && pendingAccounts.length === 0 ? (

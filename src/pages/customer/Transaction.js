@@ -1,6 +1,11 @@
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import SideBar from "../../Components/SideBar";
+import Toast, {
+  DangerToast,
+  SuccessToast,
+  WarningToast,
+} from "../../Components/Toast";
 import AuthContext from "../../context/auth-context";
 
 export default function Transaction() {
@@ -13,17 +18,25 @@ export default function Transaction() {
   const [currencies, setCurrencies] = useState([]);
   const [isGettingCurrencies, setIsGettingCurrencies] = useState(true);
   const [isRequesting, setIsRequesting] = useState(false);
+  const [toasts, setToasts] = useState([]);
 
   useEffect(() => {
     setIsGettingCurrencies(true);
     axios
       .get("http://localhost:3001/currency")
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setCurrencies(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        setToasts([
+          ...toasts,
+          <WarningToast
+            message="Fail to load currencies."
+            key={toasts.length}
+          />,
+        ]);
       })
       .finally(() => {
         setIsGettingCurrencies(false);
@@ -48,17 +61,33 @@ export default function Transaction() {
         }
       )
       .then((response) => {
-        console.log(response);
+        // console.log(response);
+        setToasts([
+          ...toasts,
+          <SuccessToast message="Request submitted." key={toasts.length} />,
+        ]);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error.response.status);
+
+        setToasts([
+          ...toasts,
+          <DangerToast
+            message="Fail to submit request. Check balance (?)"
+            key={toasts.length}
+          />,
+        ]);
       })
       .finally(() => {
+        currentType.current.value = "deposit";
+        currentAmount.current.value = "";
+        currentCurrency.current.value = "IDR";
         setIsRequesting(false);
       });
   };
   return (
     <>
+      <Toast toasts={toasts} />
       <SideBar />
       <div className="w-screen pl-16">
         <h1 className="block uppercase tracking-wide text-primary text-base md:text-lg font-bold my-4 text-center">
@@ -72,7 +101,7 @@ export default function Transaction() {
               </label>
               <select
                 id="countries"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="bg-gray-50 cursor-pointer border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required
                 ref={currentType}
                 defaultValue="deposit"
@@ -88,7 +117,7 @@ export default function Transaction() {
                 </label>
                 <select
                   id="currency"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 cursor-pointer border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   required
                   ref={currentCurrency}
                   defaultValue="IDR"

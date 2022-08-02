@@ -4,15 +4,21 @@ import { CgCheck, CgClose } from "react-icons/cg";
 import SideBar from "../../Components/SideBar";
 import AuthContext from "../../context/auth-context";
 import { FaExchangeAlt } from "react-icons/fa";
+import Toast, {
+  DangerToast,
+  SuccessToast,
+  WarningToast,
+} from "../../Components/Toast";
 
 export default function AdminTransaction() {
   const authCtx = useContext(AuthContext);
 
   const [pendingTransactions, setPendingTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [toasts, setToasts] = useState([]);
 
   const onAcceptHandler = (id, index) => {
-    console.log(id);
+    // console.log(id);
     axios
       .put(
         "http://localhost:3001/admin/transaction",
@@ -22,13 +28,25 @@ export default function AdminTransaction() {
         }
       )
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         let newTransactions = [...pendingTransactions];
         newTransactions.splice(index, 1);
         setPendingTransactions(newTransactions);
+
+        setToasts([
+          ...toasts,
+          <SuccessToast message="Transaction approved." key={toasts.length} />,
+        ]);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        setToasts([
+          ...toasts,
+          <WarningToast
+            message="Fail to approve. Check balance (?)"
+            key={toasts.length}
+          />,
+        ]);
       });
   };
 
@@ -42,13 +60,24 @@ export default function AdminTransaction() {
         }
       )
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         let newTransactions = [...pendingTransactions];
         newTransactions.splice(index, 1);
         setPendingTransactions(newTransactions);
+        setToasts([
+          ...toasts,
+          <DangerToast
+            message="Transaction disapproved."
+            key={toasts.length}
+          />,
+        ]);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        setToasts([
+          ...toasts,
+          <WarningToast message="Fail to disapprove." key={toasts.length} />,
+        ]);
       });
   };
 
@@ -58,11 +87,15 @@ export default function AdminTransaction() {
         headers: { Authorization: authCtx.token },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setPendingTransactions(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        setToasts([
+          ...toasts,
+          <WarningToast message="Fail to fetch data." key={toasts.length} />,
+        ]);
       })
       .finally(() => {
         setIsLoading(false);
@@ -71,8 +104,8 @@ export default function AdminTransaction() {
 
   return (
     <>
+      <Toast toasts={toasts} />
       <SideBar />
-
       <div className="w-screen pl-16">
         {!isLoading && pendingTransactions.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-screen uppercase text-tertiary-400 font-semibold text-lg">
@@ -85,10 +118,10 @@ export default function AdminTransaction() {
               Pending Transactions
             </h1>
             {isLoading ? (
-              <div class="flex items-center justify-center h-screen">
+              <div className="flex items-center justify-center h-screen">
                 <div role="status m-auto">
                   <svg
-                    class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-tertiary-500"
+                    className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-tertiary-500"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +135,7 @@ export default function AdminTransaction() {
                       fill="currentFill"
                     />
                   </svg>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </div>
               </div>
             ) : (
