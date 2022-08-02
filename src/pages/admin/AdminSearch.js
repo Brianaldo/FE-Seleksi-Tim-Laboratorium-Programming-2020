@@ -5,7 +5,7 @@ import SideBar from "../../Components/SideBar";
 import AuthContext from "../../context/auth-context";
 import { Link } from "react-router-dom";
 
-export default function Search() {
+export default function AdminSearch() {
   const authCtx = useContext(AuthContext);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,8 +30,10 @@ export default function Search() {
         })
         .catch((error) => {
           console.log(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
-      setIsLoading(false);
     }, 1500);
 
     return () => clearTimeout(delayDebounceFn);

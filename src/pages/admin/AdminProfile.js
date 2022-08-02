@@ -4,7 +4,7 @@ import SideBar from "../../Components/SideBar";
 import AuthContext from "../../context/auth-context";
 import { useParams } from "react-router-dom";
 
-export default function Profile() {
+export default function AdminProfile() {
   const authCtx = useContext(AuthContext);
   const { username } = useParams();
 
@@ -35,8 +35,10 @@ export default function Profile() {
       .catch((error) => {
         console.log(error);
         setIsNotFound(true);
+      })
+      .finally(() => {
+        setIsProfileLoading(false);
       });
-    setIsProfileLoading(false);
   }, []);
 
   useEffect(() => {
@@ -52,8 +54,10 @@ export default function Profile() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setIsTransactionsLoading(false);
       });
-    setIsTransactionsLoading(false);
   }, [page]);
 
   return (

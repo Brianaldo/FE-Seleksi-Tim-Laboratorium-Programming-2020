@@ -1,8 +1,8 @@
 import { FaPiggyBank } from "react-icons/fa";
 
-import SideBar from "../../Components/SideBar";
+import SideBar from "../Components/SideBar";
 
-export default function Admin() {
+export default function LandingPage() {
   return (
     <>
       <SideBar />

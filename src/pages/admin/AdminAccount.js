@@ -5,7 +5,7 @@ import AuthContext from "../../context/auth-context";
 import { FaUserCheck } from "react-icons/fa";
 import { CgCheck, CgClose } from "react-icons/cg";
 
-export default function Account() {
+export default function AdminAccount() {
   const authCtx = useContext(AuthContext);
 
   const [pendingAccounts, setPendingAccounts] = useState([]);
@@ -19,10 +19,12 @@ export default function Account() {
       .then((response) => {
         console.log(response.data);
         setPendingAccounts(response.data);
-        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 

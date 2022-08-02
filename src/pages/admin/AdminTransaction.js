@@ -5,7 +5,7 @@ import SideBar from "../../Components/SideBar";
 import AuthContext from "../../context/auth-context";
 import { FaExchangeAlt } from "react-icons/fa";
 
-export default function Transaction() {
+export default function AdminTransaction() {
   const authCtx = useContext(AuthContext);
 
   const [pendingTransactions, setPendingTransactions] = useState([]);
@@ -63,9 +63,10 @@ export default function Transaction() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-
-    setIsLoading(false);
   }, []);
 
   return (

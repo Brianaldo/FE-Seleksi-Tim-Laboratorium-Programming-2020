@@ -6,6 +6,8 @@ import {
   FaPiggyBank,
   FaSignOutAlt,
   FaExchangeAlt,
+  FaAddressCard,
+  FaPeopleArrows,
 } from "react-icons/fa";
 import AuthContext from "../context/auth-context";
 
@@ -37,6 +39,30 @@ const SideBar = () => {
               icon={<FaSearch size="20" />}
               text="Search Customers"
             />
+          </Link>
+          <Divider />
+          <button onClick={authCtx.logout}>
+            <SideBarIcon icon={<FaSignOutAlt size="20" />} text="Log Out" />
+          </button>
+        </>
+      )}
+      {authCtx.role === "customer" && (
+        <>
+          <Link to="/">
+            <SideBarIcon icon={<FaPiggyBank size="20" />} text="Home" />
+          </Link>
+          <Divider />
+          <Link to="/profile">
+            <SideBarIcon icon={<FaAddressCard size="20" />} text="Profile" />
+          </Link>
+          <Link to="/transaction">
+            <SideBarIcon
+              icon={<FaExchangeAlt size="20" />}
+              text="Deposit - Withdraw"
+            />
+          </Link>
+          <Link to="/transfer">
+            <SideBarIcon icon={<FaPeopleArrows size="20" />} text="Transfer" />
           </Link>
           <Divider />
           <button onClick={authCtx.logout}>
