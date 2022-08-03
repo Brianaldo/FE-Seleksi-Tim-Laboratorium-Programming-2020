@@ -23,7 +23,7 @@ export default function Profile() {
   useEffect(() => {
     setIsProfileLoading(true);
     axios
-      .get(`http://localhost:3001/profile/`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/profile/`, {
         headers: { Authorization: authCtx.token },
       })
       .then((response) => {
@@ -47,7 +47,7 @@ export default function Profile() {
   useEffect(() => {
     setIsTransactionsLoading(true);
     axios
-      .get(`http://localhost:3001/history/${page}`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/history/${page}`, {
         headers: { Authorization: authCtx.token },
       })
       .then((response) => {

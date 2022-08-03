@@ -22,7 +22,7 @@ export default function AdminTransaction() {
     // console.log(id);
     axios
       .put(
-        "http://localhost:3001/admin/transaction",
+        `${process.env.REACT_APP_BACKEND_URL}/admin/transaction`,
         { id: id, status: "accepted" },
         {
           headers: { Authorization: authCtx.token },
@@ -86,7 +86,7 @@ export default function AdminTransaction() {
   const onRejectHandler = (id, index) => {
     axios
       .put(
-        "http://localhost:3001/admin/transaction",
+        `${process.env.REACT_APP_BACKEND_URL}/admin/transaction`,
         { id: id, status: "rejected" },
         {
           headers: { Authorization: authCtx.token },
@@ -139,7 +139,7 @@ export default function AdminTransaction() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/admin/transaction", {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/admin/transaction`, {
         headers: { Authorization: authCtx.token },
       })
       .then((response) => {

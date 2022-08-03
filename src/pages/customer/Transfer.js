@@ -24,7 +24,7 @@ export default function Transfer() {
   useEffect(() => {
     setIsGettingCurrencies(true);
     axios
-      .get("http://localhost:3001/currency")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/currency`)
       .then((response) => {
         // console.log(response);
         setCurrencies(response.data);
@@ -50,7 +50,7 @@ export default function Transfer() {
     setIsRequesting(true);
     axios
       .post(
-        "http://localhost:3001/transfer",
+        `${process.env.REACT_APP_BACKEND_URL}/transfer`,
         {
           amount: currentAmount.current.value,
           currency: currentCurrency.current.value,

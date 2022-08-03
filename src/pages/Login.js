@@ -21,9 +21,9 @@ export default function Login() {
     e.preventDefault();
 
     setIsLoading(true);
-
+    // console.log(`${process.env.REACT_APP_BACKEND_URL}/login`);
     await axios
-      .post("http://localhost:3001/login", {
+      .post(`${process.env.REACT_APP_BACKEND_URL}/login`, {
         username: username.current.value,
         password: password.current.value,
       })
@@ -123,7 +123,7 @@ export default function Login() {
                 <>
                   <svg
                     role="status"
-                    class="inline mr-3 w-4 h-4 text-white animate-spin"
+                    className="inline mr-3 w-4 h-4 text-white animate-spin"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"

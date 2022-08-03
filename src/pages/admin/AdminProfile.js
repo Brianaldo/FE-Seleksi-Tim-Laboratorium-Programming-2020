@@ -28,7 +28,7 @@ export default function AdminProfile() {
   useEffect(() => {
     setIsProfileLoading(true);
     axios
-      .get(`http://localhost:3001/admin/profile/${username}`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/admin/profile/${username}`, {
         headers: { Authorization: authCtx.token },
       })
       .then((response) => {
@@ -57,9 +57,12 @@ export default function AdminProfile() {
   useEffect(() => {
     setIsTransactionsLoading(true);
     axios
-      .get(`http://localhost:3001/admin/history/${username}/${page}`, {
-        headers: { Authorization: authCtx.token },
-      })
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/admin/history/${username}/${page}`,
+        {
+          headers: { Authorization: authCtx.token },
+        }
+      )
       .then((response) => {
         // console.log(response.data);
         setTotal(response.data.total);

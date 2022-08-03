@@ -51,7 +51,7 @@ export default function Register() {
       reader.onload = async () => {
         base64 = reader.result;
         await axios
-          .post("http://localhost:3001/register", {
+          .post(`${process.env.REACT_APP_BACKEND_URL}/register`, {
             username: username.current.value,
             password: password,
             name: name.current.value,

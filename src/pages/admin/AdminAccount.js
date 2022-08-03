@@ -20,7 +20,7 @@ export default function AdminAccount() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/admin/verify", {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/admin/verify`, {
         headers: { Authorization: authCtx.token },
       })
       .then((response) => {
@@ -44,7 +44,7 @@ export default function AdminAccount() {
   const onAcceptHandler = (index, username) => {
     axios
       .put(
-        "http://localhost:3001/admin/verify",
+        `${process.env.REACT_APP_BACKEND_URL}/admin/verify`,
         { username: username, verify: "customer" },
         {
           headers: { Authorization: authCtx.token },
@@ -88,7 +88,7 @@ export default function AdminAccount() {
   const onRejectHandler = (index, username) => {
     axios
       .put(
-        "http://localhost:3001/admin/verify",
+        `${process.env.REACT_APP_BACKEND_URL}/admin/verify`,
         { username: username, verify: "denied" },
         {
           headers: { Authorization: authCtx.token },

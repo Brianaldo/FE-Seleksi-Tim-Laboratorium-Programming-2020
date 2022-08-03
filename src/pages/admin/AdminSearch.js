@@ -21,7 +21,7 @@ export default function AdminSearch() {
       // console.log(searchTerm);
       axios
         .post(
-          "http://localhost:3001/admin/profile",
+          `${process.env.REACT_APP_BACKEND_URL}/admin/profile`,
           { query: searchTerm },
           {
             headers: { Authorization: authCtx.token },
