@@ -42,5 +42,6 @@
     "autoprefixer": "^10.4.8",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.7"
-  }
+  },
+  "homepage": "https://brianaldo.github.io/FE-Seleksi-Tim-Laboratorium-Programming-2020/"
 }
