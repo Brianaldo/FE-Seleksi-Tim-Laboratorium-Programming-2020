@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/FE-Seleksi-Tim-Laboratorium-Programming-2020/static/css/main.334acf1c.css",
-    "main.js": "/FE-Seleksi-Tim-Laboratorium-Programming-2020/static/js/main.10cbb1f3.js",
+    "main.js": "/FE-Seleksi-Tim-Laboratorium-Programming-2020/static/js/main.45fa0aa3.js",
     "static/js/787.cda612ba.chunk.js": "/FE-Seleksi-Tim-Laboratorium-Programming-2020/static/js/787.cda612ba.chunk.js",
     "index.html": "/FE-Seleksi-Tim-Laboratorium-Programming-2020/index.html",
     "main.334acf1c.css.map": "/FE-Seleksi-Tim-Laboratorium-Programming-2020/static/css/main.334acf1c.css.map",
-    "main.10cbb1f3.js.map": "/FE-Seleksi-Tim-Laboratorium-Programming-2020/static/js/main.10cbb1f3.js.map",
+    "main.45fa0aa3.js.map": "/FE-Seleksi-Tim-Laboratorium-Programming-2020/static/js/main.45fa0aa3.js.map",
     "787.cda612ba.chunk.js.map": "/FE-Seleksi-Tim-Laboratorium-Programming-2020/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.334acf1c.css",
-    "static/js/main.10cbb1f3.js"
+    "static/js/main.45fa0aa3.js"
   ]
 }
