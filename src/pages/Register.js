@@ -6,6 +6,8 @@ import ToastContext from "../context/toast-context";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const MAX_SIZE = 2 * 1024 * 1024; // 2 MB
+
   const toastsCtx = useContext(ToastContext);
   const navigate = useNavigate();
 
@@ -42,6 +44,7 @@ export default function Register() {
       password.length < 8 ||
       confirmPassword !== password
     ) {
+      setIsLoading(false);
     } else {
       let base64;
 
@@ -85,11 +88,12 @@ export default function Register() {
                 key={toastsCtx.toasts.length}
               />
             );
+          })
+          .finally(() => {
+            setIsLoading(false);
           });
       };
     }
-
-    setIsLoading(false);
   };
 
   return (
@@ -199,6 +203,17 @@ export default function Register() {
                 type="file"
                 accept="image/*"
                 required
+                onChange={(e) => {
+                  if (e.target.files[0].size > MAX_SIZE) {
+                    e.target.value = null;
+                    toastsCtx.push(
+                      <WarningToast
+                        message="File exceeded 2 MB."
+                        key={toastsCtx.toasts.length}
+                      />
+                    );
+                  }
+                }}
                 ref={photo}
               />
             </div>

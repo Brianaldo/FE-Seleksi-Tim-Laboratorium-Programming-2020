@@ -132,10 +132,10 @@ export default function AdminAccount() {
               Unverified Accounts
             </h1>
             {isLoading ? (
-              <div class="flex items-center justify-center h-screen">
+              <div className="flex items-center justify-center h-screen">
                 <div role="status m-auto">
                   <svg
-                    class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-tertiary-500"
+                    className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-tertiary-500"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +149,7 @@ export default function AdminAccount() {
                       fill="currentFill"
                     />
                   </svg>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </div>
               </div>
             ) : (
@@ -187,28 +187,37 @@ const AccountCard = ({
   onAcceptHandler,
   onRejectHandler,
 }) => {
+  const [disable, setDisable] = useState(false);
   return (
     <>
-      <div class="max-w-sm w-11/12 bg-white rounded-lg border border-gray-200 shadow-md">
-        <div class="flex justify-end px-4 pt-4"></div>
-        <div class="flex flex-col items-center py-10">
+      <div className="max-w-sm w-11/12 bg-white rounded-lg border border-gray-200 shadow-md">
+        <div className="flex justify-end px-4 pt-4"></div>
+        <div className="flex flex-col items-center py-10">
           <img
-            class="mb-3 w-60 h-40 rounded-2xl shadow-lg"
+            className="mb-3 w-60 h-40 rounded-2xl shadow-lg"
             src={img}
             alt={username}
           />
-          <h5 class="mb-1 text-xl font-medium text-gray-900">{name}</h5>
-          <span class="text-sm text-gray-500">{username}</span>
-          <div class="flex mt-4 space-x-3 lg:mt-6">
+          <h5 className="mb-1 text-xl font-medium text-gray-900">{name}</h5>
+          <span className="text-sm text-gray-500">{username}</span>
+          <div className="flex mt-4 space-x-3 lg:mt-6">
             <button
-              class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300"
-              onClick={onAcceptHandler}
+              className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 disabled:cursor-not-allowed disabled:hover:bg-green-500"
+              onClick={() => {
+                setDisable(true);
+                onAcceptHandler();
+              }}
+              disabled={disable}
             >
               <CgCheck />
             </button>
             <button
-              class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300"
-              onClick={onRejectHandler}
+              className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 disabled:cursor-not-allowed disabled:hover:bg-red-500"
+              onClick={() => {
+                setDisable(true);
+                onRejectHandler();
+              }}
+              disabled={disable}
             >
               <CgClose />
             </button>

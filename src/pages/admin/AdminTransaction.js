@@ -223,51 +223,17 @@ export default function AdminTransaction() {
                   <tbody>
                     {pendingTransactions.map((transaction, index) => {
                       return (
-                        <tr
-                          className="bg-white border-b text-center"
-                          key={transaction.id}
-                        >
-                          <td className="py-4 px-6">
-                            {new Date(transaction.timestamp).toLocaleString(
-                              "id"
-                            )}
-                          </td>
-                          <td className="py-4 px-6">{transaction.username}</td>
-                          {transaction.type === "deposit" ? (
-                            <td className="py-4 px-6 uppercase text-green-600 font-bold">
-                              {transaction.type}
-                            </td>
-                          ) : (
-                            <td className="py-4 px-6 uppercase text-red-600 font-bold">
-                              {transaction.type}
-                            </td>
-                          )}
-                          <td className="py-4 px-6">
-                            IDR{" "}
-                            {transaction.amount.toLocaleString("id", {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2,
-                            })}
-                          </td>
-                          <td className="py-4 px-6 flex justify-center gap-1">
-                            <button
-                              className="inline-flex items-center py-2 px-2 text-base font-medium text-center text-white bg-green-500 rounded-full hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                              onClick={() => {
-                                onAcceptHandler(transaction.id, index);
-                              }}
-                            >
-                              <CgCheck />
-                            </button>
-                            <button
-                              className="inline-flex items-center py-2 px-2 text-base font-medium text-center text-white bg-red-500 rounded-full hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                              onClick={() => {
-                                onRejectHandler(transaction.id, index);
-                              }}
-                            >
-                              <CgClose />
-                            </button>
-                          </td>
-                        </tr>
+                        <ActionButtons
+                          transaction={transaction}
+                          index={index}
+                          onAcceptHandler={() => {
+                            onAcceptHandler(transaction.id, index);
+                          }}
+                          onRejectHandler={() => {
+                            onRejectHandler(transaction.id, index);
+                          }}
+                          key={index}
+                        />
                       );
                     })}
                   </tbody>
@@ -280,3 +246,60 @@ export default function AdminTransaction() {
     </>
   );
 }
+
+const ActionButtons = ({
+  transaction,
+  index,
+  onAcceptHandler,
+  onRejectHandler,
+}) => {
+  const [disable, setDisable] = useState(false);
+  return (
+    <>
+      <tr className="bg-white border-b text-center" key={transaction.id}>
+        <td className="py-4 px-6">
+          {new Date(transaction.timestamp).toLocaleString("id")}
+        </td>
+        <td className="py-4 px-6">{transaction.username}</td>
+        {transaction.type === "deposit" ? (
+          <td className="py-4 px-6 uppercase text-green-600 font-bold">
+            {transaction.type}
+          </td>
+        ) : (
+          <td className="py-4 px-6 uppercase text-red-600 font-bold">
+            {transaction.type}
+          </td>
+        )}
+        <td className="py-4 px-6">
+          IDR{" "}
+          {transaction.amount.toLocaleString("id", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
+        </td>
+        <td className="py-4 px-6 flex justify-center gap-1">
+          <button
+            className="inline-flex items-center py-2 px-2 text-base font-medium text-center text-white bg-green-500 rounded-full hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300  disabled:cursor-not-allowed disabled:hover:bg-green-500"
+            onClick={() => {
+              setDisable(true);
+              onAcceptHandler();
+            }}
+            disabled={disable}
+          >
+            <CgCheck />
+          </button>
+          <button
+            className="inline-flex items-center py-2 px-2 text-base font-medium text-center text-white bg-red-500 rounded-full hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 disabled:cursor-not-allowed disabled:hover:bg-red-500"
+            onClick={() => {
+              setDisable(true);
+              onRejectHandler();
+            }}
+            disabled={disable}
+          >
+            <CgClose />
+          </button>
+        </td>
+      </tr>
+    </>
+  );
+};
