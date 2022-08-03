@@ -99,7 +99,7 @@ export default function Profile() {
             <div className="my-5 flex justify-between items-stretch">
               <div className="flex items-center space-x-4">
                 <img
-                  className="w-16 h-16 rounded-2xl"
+                  className="h-40 w-60 rounded-2xl"
                   src={customer.customer.identity_photo}
                   alt=""
                 />

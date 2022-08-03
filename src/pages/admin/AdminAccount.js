@@ -193,7 +193,7 @@ const AccountCard = ({
         <div class="flex justify-end px-4 pt-4"></div>
         <div class="flex flex-col items-center py-10">
           <img
-            class="mb-3 w-24 h-24 rounded-full shadow-lg"
+            class="mb-3 w-60 h-40 rounded-2xl shadow-lg"
             src={img}
             alt={username}
           />
