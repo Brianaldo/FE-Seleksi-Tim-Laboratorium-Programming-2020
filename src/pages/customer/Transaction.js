@@ -41,6 +41,7 @@ export default function Transaction() {
       .finally(() => {
         setIsGettingCurrencies(false);
       });
+    // eslint-disable-next-line
   }, []);
 
   const onRequestHandler = (e) => {

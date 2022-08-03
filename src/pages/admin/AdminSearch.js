@@ -46,6 +46,7 @@ export default function AdminSearch() {
     }, 1000);
 
     return () => clearTimeout(delayDebounceFn);
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   return (
@@ -90,7 +91,7 @@ export default function AdminSearch() {
           </form>
           {isLoading ? (
             <div className="flex items-center justify-center h-96">
-              <div role="status m-auto">
+              <div>
                 <svg
                   className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-tertiary-500"
                   viewBox="0 0 100 101"

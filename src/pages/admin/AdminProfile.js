@@ -52,6 +52,7 @@ export default function AdminProfile() {
       .finally(() => {
         setIsProfileLoading(false);
       });
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -80,6 +81,7 @@ export default function AdminProfile() {
       .finally(() => {
         setIsTransactionsLoading(false);
       });
+    // eslint-disable-next-line
   }, [page]);
 
   return (
@@ -96,7 +98,7 @@ export default function AdminProfile() {
           <div className="px-5">
             {isProfileLoading ? (
               <div className="flex items-center justify-center h-28">
-                <div role="status m-auto">
+                <div>
                   <svg
                     className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-tertiary-500"
                     viewBox="0 0 100 101"
@@ -158,7 +160,7 @@ export default function AdminProfile() {
             )}
             {isTransactionsLoading ? (
               <div className="flex items-center justify-center h-96">
-                <div role="status m-auto">
+                <div>
                   <svg
                     className="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-tertiary-500"
                     viewBox="0 0 100 101"
