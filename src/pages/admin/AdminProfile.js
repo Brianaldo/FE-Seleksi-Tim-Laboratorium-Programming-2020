@@ -3,9 +3,13 @@ import { useContext, useEffect, useState } from "react";
 import SideBar from "../../Components/SideBar";
 import AuthContext from "../../context/auth-context";
 import { useParams } from "react-router-dom";
+import ToastContext from "../../context/toast-context";
+import { WarningToast } from "../../Components/Toast";
 
 export default function AdminProfile() {
   const authCtx = useContext(AuthContext);
+  const toastsCtx = useContext(ToastContext);
+
   const { username } = useParams();
 
   const [customer, setCustomer] = useState({
@@ -19,7 +23,7 @@ export default function AdminProfile() {
   const [isProfileLoading, setIsProfileLoading] = useState(true);
   const [isTransactionsLoading, setIsTransactionsLoading] = useState(true);
 
-  const [isNotFound, setIsNotFound] = useState(true);
+  const [isNotFound, setIsNotFound] = useState(false);
 
   useEffect(() => {
     setIsProfileLoading(true);
@@ -35,6 +39,15 @@ export default function AdminProfile() {
       .catch((error) => {
         // console.log(error);
         setIsNotFound(true);
+
+        if (error.response.status === 404) return;
+
+        toastsCtx.push(
+          <WarningToast
+            message="Internal server error."
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .finally(() => {
         setIsProfileLoading(false);
@@ -54,6 +67,12 @@ export default function AdminProfile() {
       })
       .catch((error) => {
         // console.log(error);
+        toastsCtx.push(
+          <WarningToast
+            message="Internal server error."
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .finally(() => {
         setIsTransactionsLoading(false);

@@ -4,18 +4,19 @@ import { CgCheck, CgClose } from "react-icons/cg";
 import SideBar from "../../Components/SideBar";
 import AuthContext from "../../context/auth-context";
 import { FaExchangeAlt } from "react-icons/fa";
-import Toast, {
+import {
   DangerToast,
   SuccessToast,
   WarningToast,
 } from "../../Components/Toast";
+import ToastContext from "../../context/toast-context";
 
 export default function AdminTransaction() {
   const authCtx = useContext(AuthContext);
+  const toastsCtx = useContext(ToastContext);
 
   const [pendingTransactions, setPendingTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [toasts, setToasts] = useState([]);
 
   const onAcceptHandler = (id, index) => {
     // console.log(id);
@@ -33,20 +34,52 @@ export default function AdminTransaction() {
         newTransactions.splice(index, 1);
         setPendingTransactions(newTransactions);
 
-        setToasts([
-          ...toasts,
-          <SuccessToast message="Transaction approved." key={toasts.length} />,
-        ]);
+        toastsCtx.push(
+          <SuccessToast
+            message="Transaction approved."
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .catch((error) => {
         // console.log(error);
-        setToasts([
-          ...toasts,
+
+        if (error.response.status === 501) {
+          toastsCtx.push(
+            <WarningToast
+              message="Bad Request."
+              key={toastsCtx.toasts.length}
+            />
+          );
+          return;
+        }
+
+        if (error.response.status === 404) {
+          toastsCtx.push(
+            <WarningToast
+              message="Invalid transaction."
+              key={toastsCtx.toasts.length}
+            />
+          );
+          return;
+        }
+
+        if (error.response.status === 400) {
+          toastsCtx.push(
+            <WarningToast
+              message="insufficient customer balance."
+              key={toastsCtx.toasts.length}
+            />
+          );
+          return;
+        }
+
+        toastsCtx.push(
           <WarningToast
-            message="Fail to approve. Check balance (?)"
-            key={toasts.length}
-          />,
-        ]);
+            message="Internal server error."
+            key={toastsCtx.toasts.length}
+          />
+        );
       });
   };
 
@@ -64,20 +97,43 @@ export default function AdminTransaction() {
         let newTransactions = [...pendingTransactions];
         newTransactions.splice(index, 1);
         setPendingTransactions(newTransactions);
-        setToasts([
-          ...toasts,
+
+        toastsCtx.push(
           <DangerToast
             message="Transaction disapproved."
-            key={toasts.length}
-          />,
-        ]);
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .catch((error) => {
         // console.log(error);
-        setToasts([
-          ...toasts,
-          <WarningToast message="Fail to disapprove." key={toasts.length} />,
-        ]);
+
+        if (error.response.status === 501) {
+          toastsCtx.push(
+            <WarningToast
+              message="Bad Request."
+              key={toastsCtx.toasts.length}
+            />
+          );
+          return;
+        }
+
+        if (error.response.status === 404) {
+          toastsCtx.push(
+            <WarningToast
+              message="Invalid transaction."
+              key={toastsCtx.toasts.length}
+            />
+          );
+          return;
+        }
+
+        toastsCtx.push(
+          <WarningToast
+            message="Internal server error."
+            key={toastsCtx.toasts.length}
+          />
+        );
       });
   };
 
@@ -92,10 +148,12 @@ export default function AdminTransaction() {
       })
       .catch((error) => {
         // console.log(error);
-        setToasts([
-          ...toasts,
-          <WarningToast message="Fail to fetch data." key={toasts.length} />,
-        ]);
+        toastsCtx.push(
+          <WarningToast
+            message="Internal server error."
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .finally(() => {
         setIsLoading(false);
@@ -104,7 +162,6 @@ export default function AdminTransaction() {
 
   return (
     <>
-      <Toast toasts={toasts} />
       <SideBar />
       <div className="w-screen pl-16">
         {!isLoading && pendingTransactions.length === 0 ? (

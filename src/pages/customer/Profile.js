@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import SideBar from "../../Components/SideBar";
+import { WarningToast } from "../../Components/Toast";
 import AuthContext from "../../context/auth-context";
+import ToastContext from "../../context/toast-context";
 
 export default function Profile() {
   const authCtx = useContext(AuthContext);
+  const toastsCtx = useContext(ToastContext);
 
   const [customer, setCustomer] = useState({
     account: { username: "", role: "" },
@@ -29,6 +32,12 @@ export default function Profile() {
       })
       .catch((error) => {
         // console.log(error);
+        toastsCtx.push(
+          <WarningToast
+            message="Internal server error."
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .finally(() => {
         setIsProfileLoading(false);
@@ -48,6 +57,12 @@ export default function Profile() {
       })
       .catch((error) => {
         // console.log(error);
+        toastsCtx.push(
+          <WarningToast
+            message="Internal server error."
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .finally(() => {
         setIsTransactionsLoading(false);

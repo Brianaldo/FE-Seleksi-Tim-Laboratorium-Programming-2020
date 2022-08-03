@@ -4,9 +4,12 @@ import { FaChevronRight } from "react-icons/fa";
 import SideBar from "../../Components/SideBar";
 import AuthContext from "../../context/auth-context";
 import { Link } from "react-router-dom";
+import ToastContext from "../../context/toast-context";
+import { WarningToast } from "../../Components/Toast";
 
 export default function AdminSearch() {
   const authCtx = useContext(AuthContext);
+  const toastsCtx = useContext(ToastContext);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [customers, setCustomers] = useState([]);
@@ -30,11 +33,17 @@ export default function AdminSearch() {
         })
         .catch((error) => {
           // console.log(error);
+          toastsCtx.push(
+            <WarningToast
+              message="Internal server error."
+              key={toastsCtx.toasts.length}
+            />
+          );
         })
         .finally(() => {
           setIsLoading(false);
         });
-    }, 1500);
+    }, 1000);
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm]);

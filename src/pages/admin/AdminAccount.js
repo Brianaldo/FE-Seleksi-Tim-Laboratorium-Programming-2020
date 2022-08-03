@@ -4,18 +4,19 @@ import SideBar from "../../Components/SideBar";
 import AuthContext from "../../context/auth-context";
 import { FaUserCheck } from "react-icons/fa";
 import { CgCheck, CgClose } from "react-icons/cg";
-import Toast, {
+import {
   DangerToast,
   SuccessToast,
   WarningToast,
 } from "../../Components/Toast";
+import ToastContext from "../../context/toast-context";
 
 export default function AdminAccount() {
   const authCtx = useContext(AuthContext);
+  const toastsCtx = useContext(ToastContext);
 
   const [pendingAccounts, setPendingAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [toasts, setToasts] = useState([]);
 
   useEffect(() => {
     axios
@@ -28,10 +29,12 @@ export default function AdminAccount() {
       })
       .catch((error) => {
         // console.log(error);
-        setToasts([
-          ...toasts,
-          <WarningToast message="Fail to fetch data." key={toasts.length} />,
-        ]);
+        toastsCtx.push(
+          <WarningToast
+            message="Internal server error."
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .finally(() => {
         setIsLoading(false);
@@ -53,20 +56,32 @@ export default function AdminAccount() {
         newPendingAccounts.splice(index, 1);
         setPendingAccounts(newPendingAccounts);
 
-        setToasts([
-          ...toasts,
+        toastsCtx.push(
           <SuccessToast
             message={`${username} verified.`}
-            key={toasts.length}
-          />,
-        ]);
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .catch((error) => {
         // console.log(error);
-        setToasts([
-          ...toasts,
-          <WarningToast message="Fail to verify." key={toasts.length} />,
-        ]);
+        if (error.response.status === 400) {
+          toastsCtx.push(
+            <WarningToast
+              message="Fail to verify."
+              key={toastsCtx.toasts.length}
+            />
+          );
+
+          return;
+        }
+
+        toastsCtx.push(
+          <WarningToast
+            message="Internal server error."
+            key={toastsCtx.toasts.length}
+          />
+        );
       });
   };
 
@@ -85,22 +100,25 @@ export default function AdminAccount() {
         newPendingAccounts.splice(index, 1);
         setPendingAccounts(newPendingAccounts);
 
-        setToasts([
-          ...toasts,
-          <DangerToast message={`${username} rejected.`} key={toasts.length} />,
-        ]);
+        toastsCtx.push(
+          <DangerToast
+            message={`${username} rejected.`}
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .catch((error) => {
         // console.log(error);
-        setToasts([
-          ...toasts,
-          <WarningToast message="Fail to reject." key={toasts.length} />,
-        ]);
+        toastsCtx.push(
+          <WarningToast
+            message="Fail to reject."
+            key={toastsCtx.toasts.length}
+          />
+        );
       });
   };
   return (
     <>
-      <Toast toasts={toasts} />
       <SideBar />
       <div className="w-screen pl-16">
         {!isLoading && pendingAccounts.length === 0 ? (

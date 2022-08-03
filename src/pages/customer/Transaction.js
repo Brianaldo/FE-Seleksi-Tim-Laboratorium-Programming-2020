@@ -1,15 +1,17 @@
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
 import SideBar from "../../Components/SideBar";
-import Toast, {
+import {
   DangerToast,
   SuccessToast,
   WarningToast,
 } from "../../Components/Toast";
 import AuthContext from "../../context/auth-context";
+import ToastContext from "../../context/toast-context";
 
 export default function Transaction() {
   const authCtx = useContext(AuthContext);
+  const toastsCtx = useContext(ToastContext);
 
   const currentType = useRef();
   const currentCurrency = useRef();
@@ -18,7 +20,6 @@ export default function Transaction() {
   const [currencies, setCurrencies] = useState([]);
   const [isGettingCurrencies, setIsGettingCurrencies] = useState(true);
   const [isRequesting, setIsRequesting] = useState(false);
-  const [toasts, setToasts] = useState([]);
 
   useEffect(() => {
     setIsGettingCurrencies(true);
@@ -30,13 +31,12 @@ export default function Transaction() {
       })
       .catch((error) => {
         // console.log(error);
-        setToasts([
-          ...toasts,
+        toastsCtx.push(
           <WarningToast
             message="Fail to load currencies."
-            key={toasts.length}
-          />,
-        ]);
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .finally(() => {
         setIsGettingCurrencies(false);
@@ -62,21 +62,32 @@ export default function Transaction() {
       )
       .then((response) => {
         // console.log(response);
-        setToasts([
-          ...toasts,
-          <SuccessToast message="Request submitted." key={toasts.length} />,
-        ]);
+        toastsCtx.push(
+          <SuccessToast
+            message="Request submitted."
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .catch((error) => {
         // console.log(error.response.status);
 
-        setToasts([
-          ...toasts,
-          <DangerToast
-            message="Fail to submit request. Check balance (?)"
-            key={toasts.length}
-          />,
-        ]);
+        if (error.response.status === 400) {
+          toastsCtx.push(
+            <DangerToast
+              message="Fail to submit request. Check balance (?)"
+              key={toastsCtx.toasts.length}
+            />
+          );
+          return;
+        }
+
+        toastsCtx.push(
+          <WarningToast
+            message="Internal server error."
+            key={toastsCtx.toasts.length}
+          />
+        );
       })
       .finally(() => {
         currentType.current.value = "deposit";
@@ -87,7 +98,6 @@ export default function Transaction() {
   };
   return (
     <>
-      <Toast toasts={toasts} />
       <SideBar />
       <div className="w-screen pl-16">
         <h1 className="block uppercase tracking-wide text-primary text-base md:text-lg font-bold my-4 text-center">
@@ -152,7 +162,7 @@ export default function Transaction() {
             </div>
             <button
               type="submit"
-              className="text-white float-right  bg-tertiary-400 hover:bg-tertiary-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-40 px-5 py-2.5 text-center"
+              className="text-white float-right  bg-tertiary-400 hover:bg-tertiary-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-40 px-5 py-2.5 text-center disabled:hover:bg-tertiary-400 disabled:cursor-not-allowed"
               disabled={isRequesting}
             >
               {isRequesting ? (

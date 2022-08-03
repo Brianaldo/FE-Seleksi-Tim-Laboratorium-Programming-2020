@@ -1,16 +1,16 @@
 import { useState } from "react";
-import ReactDOM from "react-dom";
+import { Outlet } from "react-router-dom";
 
 export default function Toast({ toasts = [] }) {
-  return ReactDOM.createPortal(
+  return (
     <>
       <div className="fixed top-5 right-5 z-50 w-80 flex flex-col items-end">
         {toasts.map((toast) => {
           return toast;
         })}
       </div>
-    </>,
-    document.getElementById("toast")
+      <Outlet />
+    </>
   );
 }
 

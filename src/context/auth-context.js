@@ -13,17 +13,17 @@ const getCookie = (cname) => {
   let ca = decodedCookie.split(";");
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
-    while (c.charAt(0) == " ") {
+    while (c.charAt(0) === " ") {
       c = c.substring(1);
     }
-    if (c.indexOf(name) == 0) {
+    if (c.indexOf(name) === 0) {
       return c.substring(name.length, c.length);
     }
   }
   return "";
 };
 
-export const AuthContextProvider = (props) => {
+export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState(getCookie("token"));
   const [role, setRole] = useState(getCookie("role"));
 
@@ -49,9 +49,7 @@ export const AuthContextProvider = (props) => {
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {props.children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 
